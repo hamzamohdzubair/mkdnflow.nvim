@@ -251,7 +251,6 @@ local system_open = function(path, type)
             end
         end
     end
-    local shell_open = vim.ui.open
     -- If the file exists, open it; otherwise, issue a warning
     if type == 'url' then
         shell_open(path)
@@ -428,7 +427,7 @@ M.handlePath = function(path, anchor)
     elseif path_type == 'file' then
         handle_external_file(path)
     elseif path_type == 'pdf_file' then
-        handle_external_file('file:' .. path)
+        vim.ui.open(path)
     elseif path_type == 'anchor' then
         -- Send cursor to matching heading
         if not cursor.toId(anchor, 1) then
