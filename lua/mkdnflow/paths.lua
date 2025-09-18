@@ -427,7 +427,7 @@ M.handlePath = function(path, anchor)
     elseif path_type == 'file' then
         handle_external_file(path)
     elseif path_type == 'pdf_file' then
-        system_open(path)
+        handle_external_file('file:' .. path)
     elseif path_type == 'anchor' then
         -- Send cursor to matching heading
         if not cursor.toId(anchor, 1) then
@@ -586,16 +586,12 @@ M.moveSource = function()
                 local dir = string.match(derived_goal, '(.*)' .. sep .. '.-$')
                 if goal_exists then -- If the goal location already exists, abort
                     vim.api.nvim_command('normal! :')
-                    vim.api.nvim_echo(
+                    vim.api.nvim_echo({
                         {
-                            {
-                                "⬇️  '" .. location .. "' already exists! Aborting.",
-                                'WarningMsg',
-                            },
+                            "⬇️  '" .. location .. "' already exists! Aborting.",
+                            'WarningMsg',
                         },
-                        true,
-                        {}
-                    )
+                    }, true, {})
                 elseif source_exists then -- If the source location exists, proceed
                     if dir then -- If there's a directory in the goal location, ...
                         local to_dir_exists = exists(dir, 'd')
