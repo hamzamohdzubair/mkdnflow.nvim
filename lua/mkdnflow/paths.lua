@@ -251,6 +251,7 @@ local system_open = function(path, type)
             end
         end
     end
+    local shell_open = vim.ui.open
     -- If the file exists, open it; otherwise, issue a warning
     if type == 'url' then
         shell_open(path)
