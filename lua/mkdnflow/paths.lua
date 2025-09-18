@@ -385,6 +385,8 @@ M.pathType = function(path, anchor)
         return 'citation'
     elseif path == '' and anchor then
         return 'anchor'
+    elseif string.find(path, '%.pdf$') then
+        return 'pdf_file'
     else
         return 'nb_page'
     end
@@ -424,6 +426,8 @@ M.handlePath = function(path, anchor)
         system_open(path .. (anchor or ''), 'url')
     elseif path_type == 'file' then
         handle_external_file(path)
+    elseif path_type == 'pdf_file' then
+        system_open(path)
     elseif path_type == 'anchor' then
         -- Send cursor to matching heading
         if not cursor.toId(anchor, 1) then
